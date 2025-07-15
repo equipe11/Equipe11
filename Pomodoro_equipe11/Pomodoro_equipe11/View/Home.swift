@@ -57,6 +57,8 @@ struct Home: View {
         }
         .sheet(isPresented: $viewTarefa){
             AddTime()
+                .presentationDetents([.medium, .large])
+                .presentationDragIndicator(.visible)
         }
 
     }

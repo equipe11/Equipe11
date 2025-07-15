@@ -10,17 +10,16 @@ import SwiftUI
 struct TaskList: View {
     
     let mockTask: [Task] = [
-        Task(title: "cachorro passear", description: "leva o cachorro pra passear jaja"),
-        Task(title: "comer", description: "lembrar de comer"),
-        Task(title: "jantar", description: "lembrar de jantar"),
-        Task(title: "dorme", description: "lembrar de dorme")
+        Task(nomeTarefa: "toma banho", tempoTarefa: "10:00", tempoDescanso: "50:00"),
+        Task(nomeTarefa: "toma cha", tempoTarefa: "10:00", tempoDescanso: "50:00"),
+        Task(nomeTarefa: "toma agua", tempoTarefa: "10:00", tempoDescanso: "50:00"),
     ]
     
     var body: some View {
-        VStack {
+        NavigationView {
             List {
                 ForEach(mockTask) { item in
-                    CardList(title: item.title, description: item.description)
+                    CardList(nomeTarefa: item.nomeTarefa, tempoTarefa: item.tempoTarefa, tempoDescanso: item.tempoDescanso)
                         .listRowBackground(Color.clear)
                         .listRowInsets(EdgeInsets(top: 10, leading: 20, bottom: 10, trailing: 20))
                     
@@ -34,6 +33,14 @@ struct TaskList: View {
                     .ignoresSafeArea()
             )
             .listStyle(PlainListStyle())
+            .toolbar {
+                ToolbarItem(placement: .topBarLeading){
+                    Text("Tarefas")
+                        .font(.title)
+                        .fontWeight(.bold)
+                        .foregroundStyle(.white)
+                }
+            }
         }
     }
 }

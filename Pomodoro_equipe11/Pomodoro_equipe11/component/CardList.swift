@@ -7,18 +7,45 @@
 import SwiftUI
 
 struct CardList: View {
-    var title: String
-    var description: String
+    var nomeTarefa: String
+    var tempoTarefa: String
+    var tempoDescanso: String
     
     var body: some View{
         VStack(alignment: .leading, spacing: 5) {
-            Text(title)
-                .font(.headline)
-                .foregroundColor(.red)
+            HStack {
+                Text(nomeTarefa)
+                    .font(.headline)
+                    .foregroundColor(.black)
+                
+                Spacer()
+                
+                Button(action: {
+                    print("inicar tarefa novamente")
+                }){
+                    Image(systemName: "play")
+                        .foregroundStyle(.green)
+                        .padding(.trailing, 15)
+                }
+            }
             
-            Text(description)
-                .font(.subheadline)
-                .foregroundColor(.red)
+            HStack {
+                Text("Tempo de tarefa:")
+                    .font(.subheadline)
+                    .foregroundColor(.black)
+                
+                Text(tempoTarefa)
+                    .foregroundStyle(.green)
+            }
+            
+            HStack {
+                Text("Tempo de descanso:")
+                    .font(.subheadline)
+                    .foregroundColor(.black)
+                
+                Text(tempoDescanso)
+                    .foregroundStyle(.red)
+            }
         }
         .padding()
         .frame(maxWidth: .infinity, minHeight: 130, alignment: .topLeading)
@@ -29,5 +56,5 @@ struct CardList: View {
 }
 
 #Preview {
-    CardList(title: "ola mundo", description: "textando descricao")
+    CardList(nomeTarefa: "cachorro", tempoTarefa: "10:00", tempoDescanso: "50:60")
 }
