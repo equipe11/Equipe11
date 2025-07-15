@@ -10,35 +10,55 @@ import SwiftUI
 struct Home: View {
     @State var min: Int = 1
     @State var sec: Int = 00
+    @State var date = Date()
+    
+    @State var viewTarefa: Bool = false
     
     var body: some View {
-        ZStack{
-            Image("imageBackground")
-                .resizable()
-                .scaledToFill()
-                .ignoresSafeArea()
-            
-            VStack {
-                HStack {
-                    Text(String(format: "%02d", min))
-                    Text(":")
-                    Text(String(format: "%02d", sec))
-                }
+        NavigationView {
+            ZStack{
+                Image("imageBackground")
+                    .resizable()
+                    .scaledToFill()
+                    .ignoresSafeArea()
                 
-                Button(action: {
-                    if sec > 0 {
-                        sec -= 1
-                    } else if  min > 0 {
-                        min -= 1
-                        sec = 59
+                VStack {
+                    HStack {
+                        Text(String(format: "%02d", min))
+                            .foregroundStyle(Color.red)
+                        Text(":")
+                        Text(String(format: "%02d", sec))
+                            .foregroundStyle(Color.red)
                     }
-                }) {
-                    Text("Diminuindo valor")
+                    
+                    Button(action: {
+                        if sec > 0 {
+                            sec -= 1
+                        } else if  min > 0 {
+                            min -= 1
+                            sec = 59
+                        }
+                    }) {
+                        Text("Diminuindo valor")
+                    }
                 }
-                
+                .padding()
             }
-            .padding()
+            .toolbar{
+                ToolbarItem(placement: .topBarTrailing){
+                    Button(action: {
+                        viewTarefa.toggle()
+                    }) {
+                        Image(systemName: "plus")
+                            .foregroundStyle(.white)
+                    }
+                }
+            }
         }
+        .sheet(isPresented: $viewTarefa){
+            AddTime()
+        }
+
     }
     
 }
