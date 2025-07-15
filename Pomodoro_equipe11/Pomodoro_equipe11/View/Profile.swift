@@ -8,18 +8,30 @@
 import SwiftUI
 
 struct Profile: View {
+    @State var fogueteSelecionado: imagemPerfilNomeFoguete? = nil
+    
+    let colunas: [GridItem] = [
+        GridItem(.flexible()),
+        GridItem(.flexible())
+    ]
+    
     var body: some View {
-        ZStack{
-         Image("imageBackground")
+        ScrollView {
+            LazyVGrid(columns: colunas, spacing: 30){
+                ForEach(imagemPerfilNomeFoguete.allCases, id: \.self) {foguete in
+                    CardPerfil(foguete: foguete, selecionado: fogueteSelecionado == foguete) {
+                        fogueteSelecionado = foguete
+                    }
+                }
+            }
+            .padding()
+        }
+        .background(
+            Image("imageBackground")
                 .resizable()
                 .scaledToFill()
                 .ignoresSafeArea()
-            
-            
-            VStack {
-                Text("Profile")
-            }
-        }
+        )
     }
 }
 
