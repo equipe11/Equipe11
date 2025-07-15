@@ -11,6 +11,7 @@ enum imagemPerfilNomeFoguete: String, CaseIterable {
     case austrico = "austrico"
     case meterito = "meterito"
     case lamanuto = "lamanuto"
+    case lurico = "lurico"
     
     var image: Image {
         Image(self.rawValue)
