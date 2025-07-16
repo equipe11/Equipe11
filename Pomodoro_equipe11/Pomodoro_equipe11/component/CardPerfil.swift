@@ -7,7 +7,7 @@
 import SwiftUI
 
 struct CardPerfil: View {
-    var foguete: imagemPerfilNomeFoguete
+    var foguete: ImagemPerfilNomeFoguete
     var selecionado: Bool
     var selecionar: () -> Void
     

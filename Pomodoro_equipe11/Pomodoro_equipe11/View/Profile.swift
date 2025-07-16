@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct Profile: View {
-    @State var fogueteSelecionado: imagemPerfilNomeFoguete? = nil
+    @State var fogueteSelecionado: ImagemPerfilNomeFoguete? = nil
     
     let colunas: [GridItem] = [
         GridItem(.flexible()),
@@ -18,7 +18,7 @@ struct Profile: View {
     var body: some View {
         ScrollView {
             LazyVGrid(columns: colunas, spacing: 30){
-                ForEach(imagemPerfilNomeFoguete.allCases, id: \.self) {foguete in
+                ForEach(ImagemPerfilNomeFoguete.allCases, id: \.self) {foguete in
                     CardPerfil(foguete: foguete, selecionado: fogueteSelecionado == foguete) {
                         fogueteSelecionado = foguete
                     }

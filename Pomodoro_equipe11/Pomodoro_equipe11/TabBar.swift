@@ -37,7 +37,7 @@ struct TabBar: View {
                     .background(Color.clear)
                 
             }
-            
+
             
             Tab("Perfil", systemImage: "person.circle", value: 2) {
                 Profile()
