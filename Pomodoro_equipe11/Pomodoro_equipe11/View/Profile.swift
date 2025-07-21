@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct Profile: View {
-    @State var fogueteSelecionado: ImagemPerfilNomeFoguete? = nil
+    @EnvironmentObject var fogueteVM: FogueteViewModel
+//    @State var fogueteSelecionado: ImagemPerfilNomeFoguete? = nil
     
     let colunas: [GridItem] = [
         GridItem(.flexible()),
@@ -19,8 +20,8 @@ struct Profile: View {
         ScrollView {
             LazyVGrid(columns: colunas, spacing: 30){
                 ForEach(ImagemPerfilNomeFoguete.allCases, id: \.self) {foguete in
-                    CardPerfil(foguete: foguete, selecionado: fogueteSelecionado == foguete) {
-                        fogueteSelecionado = foguete
+                    CardPerfil(foguete: foguete, selecionado: fogueteVM.fogueteSelecionadoPerfil == foguete) {
+                        fogueteVM.fogueteSelecionadoPerfil = foguete
                     }
                 }
             }
@@ -37,4 +38,5 @@ struct Profile: View {
 
 #Preview {
     Profile()
+        .environmentObject(FogueteViewModel())
 }

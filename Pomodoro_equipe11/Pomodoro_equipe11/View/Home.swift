@@ -8,14 +8,13 @@
 import SwiftUI
 
 struct Home: View {
-    var foguete: ImagemPerfilNomeFoguete = .lurico
-    var planetas: [Planeta] = Planeta.allCases
-    
-    @State var min: Int = 1
-    @State var sec: Int = 00
-    @State var date = Date()
+    @EnvironmentObject var fogueteVM: FogueteViewModel
     
     @State var viewTarefa: Bool = false
+    
+    var planetas: [Planeta] = Planeta.allCases
+    //    var foguete: ImagemPerfilNomeFoguete = .lurico
+
     
     var body: some View {
         NavigationView {
@@ -28,7 +27,7 @@ struct Home: View {
                 VStack {
                     Spacer()
                     
-                    Image("\(foguete)")
+                    fogueteVM.fogueteSelecionadoPerfil.image
                         .resizable()
                         .scaledToFill()
                         .frame(width: 110, height: 110)
@@ -82,7 +81,6 @@ struct Home: View {
                     .presentationDetents([.medium, .large])
                     .presentationDragIndicator(.visible)
             }
-            
         }
     }
     
@@ -96,5 +94,6 @@ struct Home: View {
 #Preview {
     NavigationView{
         Home()
+            .environmentObject(FogueteViewModel())
     }
 }

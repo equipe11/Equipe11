@@ -21,7 +21,9 @@ struct AddTime: View {
             VStack {
                 Form {
                     Section {
-                        TextField("Digite o nome da tarefa", text: $nomeTarefa)
+                        Text("Digite o nome da tarefa")
+                        
+                        TextField("", text: $nomeTarefa)
                     }
                     
                     Section {
@@ -55,7 +57,7 @@ struct AddTime: View {
                     Button(action: {
                         dismiss()
                     }) {
-                        Image(systemName: "xmark")
+                        Text("Cancelar")
                             .foregroundStyle(Color.red)
                     }
                 }
