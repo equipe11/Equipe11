@@ -9,12 +9,13 @@ import SwiftUI
 
 struct AddTime: View {
     @Environment(\.dismiss) var dismiss
+    @StateObject var viewModel = PomodoroViewModel()
+    @Binding var ativa:Bool
     
     @State var nomeTarefa: String = ""
-    @State var tempoTarefa = Date()
-    @State var tempoDescanso = Date()
     @State var som: Bool = true
     @State var guardaTarefa: Bool = false
+    @State var navegarPomodoro: Bool = false
     
     var body: some View {
         NavigationView {
@@ -29,7 +30,7 @@ struct AddTime: View {
                     Section {
                         DatePicker(
                             "Tempo de tarefa",
-                            selection: $tempoTarefa,
+                            selection: $viewModel.tempoTarefa,
                             displayedComponents: [.hourAndMinute]
                             
                         )
@@ -38,7 +39,7 @@ struct AddTime: View {
                     Section {
                         DatePicker(
                             "Tempo de descanso",
-                            selection: $tempoDescanso,
+                            selection: $viewModel.tempoDescanso,
                             displayedComponents: [.hourAndMinute]
                             
                         )
@@ -62,17 +63,24 @@ struct AddTime: View {
                     }
                 }
                 ToolbarItem(placement: .topBarTrailing){
-                    Button(action: {
-                        print("clicando")
-                    }) {
-                        Text("Iniciar")
+                    Button("Iniciar"){
+                        navegarPomodoro = true
                     }
                 }
+            }
+            .fullScreenCover(isPresented: $navegarPomodoro,
+                             onDismiss: { ativa = false }
+            ){
+                Pomodoro(
+                    inicia: false,
+                    tempoTarefa: viewModel.totalSegundos(from: viewModel.tempoTarefa),
+                    tempoDescanso: viewModel.totalSegundos(from: viewModel.tempoDescanso)
+                )
             }
         }
     }
 }
 
 #Preview {
-    AddTime()
+    AddTime( ativa: .constant(false))
 }

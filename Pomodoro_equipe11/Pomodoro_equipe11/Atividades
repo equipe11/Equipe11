@@ -1,23 +1,24 @@
-
 Atividades pendentes
 
 Criar e navegar para a tela de pomodoro
 Criar funcionalidade de correr o tempo da atividade e de descanso no pomodoro
-Criar funcionalidade de vibrar o telefone quando o tempo de atividade e de descanso terminar
-Criar funcionalidade de tocar uma musica no telefone quando o tempo de atividade e de descanso terminar ( opcional de acordo com a selecao )
 
-tarefas que podem ser feitas com array ou guardando no swiftData
+----------------------------------------------------------------------------
+tarefas guardando no swiftData
 
 Criar funcionalidade de guarda atividade do pomodoro
 Criar funcionalidade de lista tarefas de pomodoro salvas
+
 Criar funcionalidade de guardar os dados offLine [
-
-atividades do pomodoro: [ nome, tempoDescanso, tempoTarefa, efeitoSonoro ],
-planeta em que o foguete esta,
-foguete selecionado como skin,
-
+    atividades do pomodoro: [ nome, tempoDescanso, tempoTarefa, efeitoSonoro ],
+    planeta em que o foguete esta,
+    foguete selecionado como skin,
 ]
 
-Tarefas complicadas
+Tarefas complicadas:
 
 Criar funcionalidade de navegar o foguete para o planeta
+----------------------------------------------------------------------------
+
+Criar funcionalidade de vibrar o telefone quando o tempo de atividade e de descanso terminar
+Criar funcionalidade de tocar uma musica no telefone quando o tempo de atividade e de descanso terminar ( opcional de acordo com a selecao )
