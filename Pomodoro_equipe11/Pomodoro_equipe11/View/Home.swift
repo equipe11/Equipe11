@@ -78,27 +78,27 @@ struct Home: View {
                         .rotationEffect(.degrees(-45))
                     
                 }
-            }
-            
-            
-        }
-        .toolbar{
-            ToolbarItem(placement: .topBarTrailing){
-                Button(action: {
-                    viewTarefa.toggle()
-                }) {
-                    Image(systemName: "plus")
-                        .foregroundStyle(.white)
+                
+                .toolbar{
+                    ToolbarItem(placement: .topBarTrailing){
+                        Button(action: {
+                            viewTarefa.toggle()
+                        }) {
+                            Image(systemName: "plus")
+                                .foregroundStyle(.white)
+                        }
+                    }
+                }
+                .toolbarBackground(.hidden, for: .navigationBar)
+                .toolbarColorScheme(.dark, for: .navigationBar)
+                
+                .sheet(isPresented: $viewTarefa){
+                    AddTime(ativa: $viewTarefa)
+                        .presentationDetents([.fraction(0.7), .large])
+                        .presentationDragIndicator(.visible)
                 }
             }
-        }
-        .toolbarBackground(.hidden, for: .navigationBar)
-        .toolbarColorScheme(.dark, for: .navigationBar)
-        
-        .sheet(isPresented: $viewTarefa){
-            AddTime(ativa: $viewTarefa)
-                .presentationDetents([.fraction(0.7), .large])
-                .presentationDragIndicator(.visible)
+
         }
     }
     

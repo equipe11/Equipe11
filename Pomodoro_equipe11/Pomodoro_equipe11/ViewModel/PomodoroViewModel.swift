@@ -9,8 +9,8 @@ import Foundation
 import Combine
 
 class PomodoroViewModel: ObservableObject {
-    @Published var tempoTarefa: Date = Date()
-    @Published var tempoDescanso: Date = Date()
+    @Published var tempoTarefa: Date = Calendar.current.date(bySettingHour: 0, minute: 0, second: 0, of: Date()) ?? Date()
+    @Published var tempoDescanso: Date = Calendar.current.date(bySettingHour: 0, minute: 0, second: 0, of: Date()) ?? Date()
     @Published var tempoRestante: Int = 0
     private var contador: Timer?
     
