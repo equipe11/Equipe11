@@ -17,6 +17,11 @@ struct AddTime: View {
     @State var guardaTarefa: Bool = false
     @State var navegarPomodoro: Bool = false
     
+    @State var minutosTarefa: String = "00"
+    @State var segundosTarefa: String = "00"
+    @State var minutosDescanso: String = "00"
+    @State var segundosDescanso: String = "00"
+    
     var body: some View {
         NavigationView {
             VStack {
@@ -28,21 +33,88 @@ struct AddTime: View {
                     }
                     
                     Section {
-                        DatePicker(
-                            "Tempo de tarefa",
-                            selection: $viewModel.tempoTarefa,
-                            displayedComponents: [.hourAndMinute]
+                        HStack {
+                            Text("Tempo da tarefa:")
                             
-                        )
+                            Spacer()
+                            
+                            TextField("", text: $minutosTarefa, onEditingChanged: { clicado in
+                                DispatchQueue.main.async {
+                                    minutosTarefa = viewModel.animacaoTexto(minutosTarefa, foco: clicado)
+                                }
+                            })
+                            .keyboardType(.numberPad)
+                            .frame(width:50 ,height: 40)
+                            .background(Color(UIColor.secondarySystemBackground))
+                            .cornerRadius(8)
+                            .multilineTextAlignment(.center)
+                            .onChange(of: minutosTarefa){
+                                if !minutosTarefa.isEmpty && minutosTarefa != "00"{
+                                    minutosTarefa = viewModel.limitarCaracteres(minutosTarefa)
+                                }
+                            }
+                            
+                            Text(":")
+                            
+                            TextField("", text: $segundosTarefa, onEditingChanged: { clicado in
+                                DispatchQueue.main.async {
+                                    segundosTarefa = viewModel.animacaoTexto(segundosTarefa, foco: clicado)
+                                }
+                            })
+                            .keyboardType(.numberPad)
+                            .frame(width:50 ,height: 40)
+                            .background(Color(UIColor.secondarySystemBackground))
+                            .cornerRadius(5)
+                            .multilineTextAlignment(.center)
+                            .onChange(of: segundosTarefa){
+                                if !segundosTarefa.isEmpty && segundosTarefa != "00" {
+                                    segundosTarefa = viewModel.limitarCaracteres(segundosTarefa)
+                                }
+                            }
+                        }
                     }
                     
+                    
                     Section {
-                        DatePicker(
-                            "Tempo de descanso",
-                            selection: $viewModel.tempoDescanso,
-                            displayedComponents: [.hourAndMinute]
+                        HStack {
+                            Text("Tempo de descanso:")
                             
-                        )
+                            Spacer()
+                            
+                            TextField("", text: $minutosDescanso, onEditingChanged: {clicado in
+                                DispatchQueue.main.async {
+                                    minutosDescanso = viewModel.animacaoTexto(minutosDescanso, foco: clicado)
+                                }
+                            })
+                            .keyboardType(.numberPad)
+                            .frame(width:50 ,height: 40)
+                            .background(Color(UIColor.secondarySystemBackground))
+                            .cornerRadius(8)
+                            .multilineTextAlignment(.center)
+                            .onChange(of: minutosDescanso) {
+                                if !minutosDescanso.isEmpty && minutosDescanso != "00" {
+                                    minutosDescanso = viewModel.limitarCaracteres(minutosDescanso)
+                                }
+                            }
+                            
+                            Text(":")
+                            
+                            TextField("", text: $segundosDescanso, onEditingChanged: {clicado in
+                                DispatchQueue.main.async {
+                                    segundosDescanso = viewModel.animacaoTexto(segundosDescanso, foco: clicado)
+                                }
+                            })
+                            .keyboardType(.numberPad)
+                            .frame(width:50 ,height: 40)
+                            .background(Color(UIColor.secondarySystemBackground))
+                            .cornerRadius(5)
+                            .multilineTextAlignment(.center)
+                            .onChange(of: segundosDescanso){
+                                if !segundosDescanso.isEmpty && segundosDescanso != "00" {
+                                    segundosDescanso = viewModel.limitarCaracteres(segundosDescanso)
+                                }
+                            }
+                        }
                     }
                     
                     Section {
@@ -73,8 +145,8 @@ struct AddTime: View {
             ){
                 Pomodoro(
                     inicia: false,
-                    tempoTarefa: viewModel.totalSegundos(from: viewModel.tempoTarefa),
-                    tempoDescanso: viewModel.totalSegundos(from: viewModel.tempoDescanso)
+                    tempoTarefa: viewModel.totalSegundos(minutos: minutosTarefa, segundos: segundosTarefa),
+                    tempoDescanso: viewModel.totalSegundos(minutos: minutosDescanso, segundos: segundosDescanso)
                 )
             }
         }

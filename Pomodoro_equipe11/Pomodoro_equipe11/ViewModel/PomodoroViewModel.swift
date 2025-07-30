@@ -9,21 +9,28 @@ import Foundation
 import Combine
 
 class PomodoroViewModel: ObservableObject {
-    @Published var tempoTarefa: Date = Calendar.current.date(bySettingHour: 0, minute: 0, second: 0, of: Date()) ?? Date()
-    @Published var tempoDescanso: Date = Calendar.current.date(bySettingHour: 0, minute: 0, second: 0, of: Date()) ?? Date()
     @Published var tempoRestante: Int = 0
     private var contador: Timer?
     
-    func minutosSegundos(from date: Date) -> (minutos: Int, segundos: Int) {
-        let calendar = Calendar.current
-        let minutos = calendar.component(.hour, from: date)
-        let segundos = calendar.component(.minute, from: date)
-        return (minutos, segundos)
+    func animacaoTexto(_ dica: String, dicaPadrao: String = "00", foco: Bool) -> String {
+        if foco && dica == dicaPadrao {
+            return ""
+        } else if !foco && dica.isEmpty {
+            return dicaPadrao
+        }
+        
+        return dica
     }
     
-    func totalSegundos(from date: Date) -> Int {
-        let (minutos, segundos) = minutosSegundos(from: date)
-        return minutos * 60 + segundos
+    func limitarCaracteres(_ tempo: String) -> String{
+        return String(tempo.prefix(2))
+    }
+    
+    func totalSegundos(minutos: String, segundos: String) -> Int {
+        var minutosInt: Int = Int(minutos) ?? 0
+        var segundosInt: Int = Int(segundos) ?? 0
+        
+        return minutosInt * 60 + segundosInt
     }
     
     func formatarTempo(_ totalSegundos: Int) -> String {
