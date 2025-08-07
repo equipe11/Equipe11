@@ -11,6 +11,7 @@ struct Pomodoro: View {
     @Environment(\.dismiss) var dismiss
     @StateObject var viewModel = PomodoroViewModel()
     
+    @Binding var ativa: Bool
     @State var inicia: Bool = false
     @State var tempo: Timer?
     var tempoTarefa: Int = 0
@@ -50,13 +51,17 @@ struct Pomodoro: View {
             .toolbar {
                 ToolbarItem(placement: .topBarLeading){
                     Button(action: {
-                        dismiss()
+                        ativa = false
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                            dismiss()
+                        }
                     }){
                         HStack {
                             Image(systemName: "chevron.left")
                             Text("Voltar")
                         }
                     }
+
                 }
             }
         }
@@ -64,5 +69,5 @@ struct Pomodoro: View {
 }
 
 #Preview {
-    Pomodoro(tempoTarefa: 0, tempoDescanso: 0)
+    Pomodoro(ativa: .constant(false), tempoTarefa: 0, tempoDescanso: 0)
 }

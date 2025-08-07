@@ -140,10 +140,10 @@ struct AddTime: View {
                     }
                 }
             }
-            .fullScreenCover(isPresented: $navegarPomodoro,
-                             onDismiss: { ativa = false }
+            .fullScreenCover(isPresented: $navegarPomodoro
             ){
                 Pomodoro(
+                    ativa: $ativa,
                     inicia: false,
                     tempoTarefa: viewModel.totalSegundos(minutos: minutosTarefa, segundos: segundosTarefa),
                     tempoDescanso: viewModel.totalSegundos(minutos: minutosDescanso, segundos: segundosDescanso)
