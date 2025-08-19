@@ -17,26 +17,39 @@ struct Profile: View {
     ]
     
     var body: some View {
-        ScrollView {
-            LazyVGrid(columns: colunas, spacing: 30){
-                ForEach(ImagemPerfilNomeFoguete.allCases, id: \.self) {foguete in
-                    CardPerfil(foguete: foguete, selecionado: fogueteVM.fogueteSelecionadoPerfil == foguete) {
-                        fogueteVM.fogueteSelecionadoPerfil = foguete
+        NavigationView{
+            ScrollView {
+                LazyVGrid(columns: colunas, spacing: 30){
+                    ForEach(ImagemPerfilNomeFoguete.allCases, id: \.self) {foguete in
+                        CardPerfil(foguete: foguete, selecionado: fogueteVM.fogueteSelecionadoPerfil == foguete) {
+                            fogueteVM.fogueteSelecionadoPerfil = foguete
+                        }
                     }
                 }
+                .padding()
             }
-            .padding()
+            .background(
+                Image("imageBackground")
+                    .resizable()
+                    .scaledToFill()
+                    .ignoresSafeArea()
+            )
+            
+            .toolbar{
+                ToolbarItem(placement: .topBarLeading){
+                    Text("Perfil")
+                        .foregroundStyle(.white)
+                        .fontWeight(.bold)
+                        .font(.title)
+                }
+            }
         }
-        .background(
-            Image("imageBackground")
-                .resizable()
-                .scaledToFill()
-                .ignoresSafeArea()
-        )
     }
 }
 
 #Preview {
-    Profile()
-        .environmentObject(FogueteViewModel())
+    NavigationView {
+        Profile()
+            .environmentObject(FogueteViewModel())
+    }
 }

@@ -12,29 +12,31 @@ struct AddTime: View {
     @StateObject var viewModel = PomodoroViewModel()
     @Binding var ativa:Bool
     
-    @State var nomeTarefa: String = ""
-    @State var som: Bool = true
-    @State var guardaTarefa: Bool = false
-    @State var navegarPomodoro: Bool = false
-    
     @State var minutosTarefa: String = "00"
     @State var segundosTarefa: String = "00"
     @State var minutosDescanso: String = "00"
     @State var segundosDescanso: String = "00"
+    
+    var podeIniciar: Bool {
+        (minutosTarefa != "00" || segundosTarefa != "00") &&
+        (minutosDescanso != "00" || segundosDescanso != "00")
+    }
     
     var body: some View {
         NavigationView {
             VStack {
                 Form {
                     Section {
-                        Text("Digite o nome da tarefa")
-                        
-                        TextField("", text: $nomeTarefa)
+                        HStack {
+                            Text("Nome:")
+                            TextField("Nome da Tarefa", text: $viewModel.nomeTarefa)
+                                .frame(minHeight: 40)
+                        }
                     }
                     
                     Section {
                         HStack {
-                            Text("Tempo da tarefa:")
+                            Text("Tempo da Tarefa:")
                             
                             Spacer()
                             
@@ -77,7 +79,7 @@ struct AddTime: View {
                     
                     Section {
                         HStack {
-                            Text("Tempo de descanso:")
+                            Text("Tempo de Descanso:")
                             
                             Spacer()
                             
@@ -118,8 +120,8 @@ struct AddTime: View {
                     }
                     
                     Section {
-                        Toggle("som", isOn: $som)
-                        Toggle("Guarda tarefa", isOn: $guardaTarefa)
+                        Toggle("Som", isOn: $viewModel.som)
+                        Toggle("Guarda Tarefa", isOn: $viewModel.guardaTarefa)
                     }
                 }
             }
@@ -136,11 +138,17 @@ struct AddTime: View {
                 }
                 ToolbarItem(placement: .topBarTrailing){
                     Button("Iniciar"){
-                        navegarPomodoro = true
+                            viewModel.checkNavegarPomodoro()
                     }
+                    .disabled(!podeIniciar)
                 }
             }
-            .fullScreenCover(isPresented: $navegarPomodoro
+            .alert("Atenção", isPresented: $viewModel.alertaGuardaTarefa){
+                Button("OK", role: .cancel){}
+            } message: {
+                Text("Insira o Nome da Tarefa para Guardá-la")
+            }
+            .fullScreenCover(isPresented: $viewModel.navegarPomodoro
             ){
                 Pomodoro(
                     ativa: $ativa,

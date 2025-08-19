@@ -34,7 +34,7 @@ struct Pomodoro: View {
                 if !inicia {
                     Button(action: {
                         inicia = true
-                        viewModel.iniciarContagem(tempo: tempoTarefa)
+                        viewModel.iniciarContagem(tempo: tempoTarefa, descanso: tempoDescanso)
                     }) {
                         Image(systemName: "play")
                             .resizable()
@@ -48,6 +48,40 @@ struct Pomodoro: View {
                         .foregroundStyle(.red)
                 }
             }
+            .alert("O Tempo de Tarefa Terminou", isPresented: $viewModel.mostraAlertaTempoDescanso){
+                Button("Iniciar Tempo de Descanso"){
+                    viewModel.iniciarContagem(tempo: tempoDescanso, descansoAtivo: true)
+                }
+                Button("Cancelar", role: .cancel) {
+                    viewModel.paraContagem()
+                }
+            } message: {
+                Text("Deseja Iniciar o Tempo de Desncanso?")
+            }
+            .overlay(
+                Group {
+                    if viewModel.voltaTelaInicialAlert {
+                        VStack {
+                            Text("Voltando para a tela inicial em \(viewModel.tempoDeVolta)")
+                                .padding()
+                                .background(.regularMaterial)
+                                .cornerRadius(10)
+                                .shadow(radius: 10)
+                        }
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        .background(Color.black.opacity(0.3))
+                        .transition(.opacity)
+                        .onChange(of: viewModel.tempoDeVolta) { novoValor in
+                            if novoValor == 0 {
+                                ativa = false
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 2){
+                                    dismiss()
+                                }
+                            }
+                        }
+                    }
+                }
+            )
             .toolbar {
                 ToolbarItem(placement: .topBarLeading){
                     Button(action: {
@@ -61,7 +95,6 @@ struct Pomodoro: View {
                             Text("Voltar")
                         }
                     }
-
                 }
             }
         }
