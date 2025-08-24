@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 @main
 struct Pomodoro_equipe11App: App {
@@ -16,5 +17,6 @@ struct Pomodoro_equipe11App: App {
             ContentView()
                 .environmentObject(fogueteVM)
         }
+        .modelContainer(for: Task.self)
     }
 }

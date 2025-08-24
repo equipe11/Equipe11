@@ -34,7 +34,7 @@ struct CardList: View {
                     .font(.subheadline)
                     .foregroundColor(.black)
                 
-                Text(tempoTarefa)
+                Text("\(tempoTarefa)")
                     .foregroundStyle(.green)
             }
             
@@ -43,7 +43,7 @@ struct CardList: View {
                     .font(.subheadline)
                     .foregroundColor(.black)
                 
-                Text(tempoDescanso)
+                Text("\(tempoDescanso)")
                     .foregroundStyle(.red)
             }
         }

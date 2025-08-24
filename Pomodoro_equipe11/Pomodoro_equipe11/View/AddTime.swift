@@ -6,9 +6,11 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct AddTime: View {
     @Environment(\.dismiss) var dismiss
+    @Environment(\.modelContext) private var context
     @StateObject var viewModel = PomodoroViewModel()
     @Binding var ativa:Bool
     
@@ -138,6 +140,14 @@ struct AddTime: View {
                 }
                 ToolbarItem(placement: .topBarTrailing){
                     Button("Iniciar"){
+                        viewModel.salvarTarefa(
+                            minutoTarefa: Int(minutosTarefa) ?? 0,
+                            segundoTarefa: Int(segundosTarefa) ?? 0,
+                            minutoDescanso: Int(minutosDescanso) ?? 0,
+                            segundoDescanso: Int(segundosDescanso) ?? 0,
+                            context: context
+                        )
+                        
                             viewModel.checkNavegarPomodoro()
                     }
                     .disabled(!podeIniciar)

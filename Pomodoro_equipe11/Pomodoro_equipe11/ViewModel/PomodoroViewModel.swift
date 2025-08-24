@@ -5,6 +5,7 @@
 //  Created by Eliardo Venancio on 24/07/25.
 //
 
+import SwiftData
 import Foundation
 import Combine
 
@@ -88,22 +89,8 @@ class PomodoroViewModel: ObservableObject {
                     DispatchQueue.main.async {
                         self.mostraAlertaTempoDescanso = false
                         self.voltaTelaInicialAlert = true
-                        self.telaInicial()
-                        
                     }
                 }
-            }
-        }
-    }
-    
-    func telaInicial(volta: Bool = false){
-        tempoDeVolta = 5
-        
-        contadorVolta = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { _ in
-            if self.tempoDeVolta > 0 {
-                self.tempoDeVolta -= 1
-            } else {
-                self.contadorVolta?.invalidate()
             }
         }
     }
@@ -111,5 +98,35 @@ class PomodoroViewModel: ObservableObject {
     func paraContagem(){
         contador?.invalidate()
         contador = nil
+    }
+    
+    func formatarSegundos(_ tempo: String) -> String{
+        let dados = tempo.split(separator: ":")
+        guard dados.count == 2,
+        let minutos = dados.first,
+        let segundos = dados.last else { return tempo }
+        
+        let segundoFormatados = String(format: "%02d", Int(segundos) ?? 0)
+        
+        return "\(minutos):\(segundoFormatados)"
+    }
+    
+    func salvarTarefa(
+        minutoTarefa: Int,
+        segundoTarefa: Int,
+        minutoDescanso: Int,
+        segundoDescanso: Int,
+        context: ModelContext
+        
+    ){
+        guard guardaTarefa, !nomeTarefa.isEmpty else { return }
+        
+        let tarefaSalvar = Task(
+            nomeTarefa: nomeTarefa,
+            tempoTarefa: "\(minutoTarefa):\(segundoTarefa)",
+            tempoDescanso: "\(minutoDescanso):\(segundoDescanso)",
+            som: som
+        )
+        context.insert(tarefaSalvar)
     }
 }

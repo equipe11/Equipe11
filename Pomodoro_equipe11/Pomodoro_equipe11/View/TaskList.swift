@@ -6,27 +6,18 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct TaskList: View {
+    @Query(sort: \Task.nomeTarefa, order: .forward) var tarefas: [Task]
     
-    let mockTask: [Task] = [
-//        Task(nomeTarefa: "toma banho", tempoTarefa: "10:00", tempoDescanso: "50:00"),
-//        Task(nomeTarefa: "toma cha", tempoTarefa: "10:00", tempoDescanso: "50:00"),
-//        Task(nomeTarefa: "toma agua", tempoTarefa: "10:00", tempoDescanso: "50:00"),
-    ]
+    @StateObject var viewModel = PomodoroViewModel()
     
     var body: some View {
         NavigationView {
             
             List {
-                ForEach(mockTask) { item in
-                    CardList(nomeTarefa: item.nomeTarefa, tempoTarefa: item.tempoTarefa, tempoDescanso: item.tempoDescanso)
-                        .listRowBackground(Color.clear)
-                        .listRowInsets(EdgeInsets(top: 10, leading: 20, bottom: 10, trailing: 20))
-                }
-                
-                
-                if mockTask.isEmpty {
+                if tarefas.isEmpty {
                     ZStack {
                         Image("imageBackground")
                             .resizable()
@@ -37,6 +28,15 @@ struct TaskList: View {
                             .foregroundStyle(.red)
                     }
                     .listRowBackground(Color.clear)
+                } else {
+                    ForEach(tarefas) { tarefa in
+                        CardList(nomeTarefa: tarefa.nomeTarefa,
+                                 tempoTarefa: viewModel.formatarSegundos(tarefa.tempoTarefa),
+                                 tempoDescanso: viewModel.formatarSegundos(tarefa.tempoDescanso)
+                        )
+                        .listRowBackground(Color.clear)
+                        
+                    }
                 }
             }
             .scrollContentBackground(.hidden)
@@ -62,4 +62,5 @@ struct TaskList: View {
 
 #Preview {
     TaskList()
+        .modelContainer(for: Task.self)
 }
