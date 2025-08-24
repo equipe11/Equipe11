@@ -20,13 +20,13 @@ struct CardList: View {
                 
                 Spacer()
                 
-                Button(action: {
-                    print("inicar tarefa novamente")
-                }){
-                    Image(systemName: "play")
-                        .foregroundStyle(.green)
-                        .padding(.trailing, 15)
-                }
+//                Button(action: {
+//                    print("inicar tarefa novamente")
+//                }){
+//                    Image(systemName: "play")
+//                        .foregroundStyle(.green)
+//                        .padding(.trailing, 15)
+//                }
             }
             
             HStack {

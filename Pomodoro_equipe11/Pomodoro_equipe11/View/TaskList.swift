@@ -9,7 +9,8 @@ import SwiftUI
 import SwiftData
 
 struct TaskList: View {
-    @Query(sort: \Task.nomeTarefa, order: .forward) var tarefas: [Task]
+    @Environment(\.modelContext) private var context
+    @Query(sort: \Task.dataCriacao, order: .reverse) var tarefas: [Task]
     
     @StateObject var viewModel = PomodoroViewModel()
     
@@ -35,7 +36,12 @@ struct TaskList: View {
                                  tempoDescanso: viewModel.formatarSegundos(tarefa.tempoDescanso)
                         )
                         .listRowBackground(Color.clear)
-                        
+                    }
+                    .onDelete { posicao in
+                        posicao.forEach{ index in
+                            let tarefa = tarefas[index]
+                            context.delete(tarefa)
+                        }
                     }
                 }
             }
