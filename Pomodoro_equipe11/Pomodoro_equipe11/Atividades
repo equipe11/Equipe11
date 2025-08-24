@@ -1,16 +1,16 @@
 Atividades pendentes
 
 Criar e navegar para a tela de pomodoro - ok
-Criar funcionalidade de correr o tempo da atividade e de descanso no pomodoro - 50%
+Criar funcionalidade de correr o tempo da atividade e de descanso no pomodoro - ok
 
 ----------------------------------------------------------------------------
 tarefas guardando no swiftData
 
-Criar funcionalidade de guarda atividade do pomodoro
-Criar funcionalidade de lista tarefas de pomodoro salvas
+Criar funcionalidade de guarda atividade do pomodoro - ok
+Criar funcionalidade de lista tarefas de pomodoro salvas - ok
 
 Criar funcionalidade de guardar os dados offLine [
-    atividades do pomodoro: [ nome, tempoDescanso, tempoTarefa, efeitoSonoro ],
+    atividades do pomodoro: [ nome, tempoDescanso, tempoTarefa, efeitoSonoro ] - ok,
     planeta em que o foguete esta,
     foguete selecionado como skin,
 ]
