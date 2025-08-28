@@ -6,14 +6,25 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct Home: View {
+    @Query private var fogueteSalvo: [Foguete]
     @EnvironmentObject var fogueteVM: FogueteViewModel
     
     @State var viewTarefa: Bool = false
     @State var posicaoPlaneta: [CGPoint] = Array(repeating: .zero, count: Planeta.allCases.count)
     
     var planetas: [Planeta] = Planeta.allCases
+    
+    var fogueteAtual: ImagemPerfilNomeFoguete {
+        if let salvo = fogueteSalvo.first,
+           let foguete = ImagemPerfilNomeFoguete(rawValue: salvo.nome) {
+            return foguete
+        }
+        
+        return fogueteVM.fogueteSelecionadoPerfil
+    }
     
     var body: some View {
         NavigationView {
@@ -70,7 +81,7 @@ struct Home: View {
                 VStack {
                     Spacer()
                     
-                    fogueteVM.fogueteSelecionadoPerfil.image
+                    fogueteAtual.image
                         .resizable()
                         .scaledToFill()
                         .frame(width: 110, height: 110)

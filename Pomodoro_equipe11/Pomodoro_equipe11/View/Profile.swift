@@ -5,28 +5,49 @@
 //  Created by Eliardo Venancio on 08/07/25.
 //
 
+import SwiftData
 import SwiftUI
 
 struct Profile: View {
     @EnvironmentObject var fogueteVM: FogueteViewModel
-//    @State var fogueteSelecionado: ImagemPerfilNomeFoguete? = nil
-    
+    @Environment(\.modelContext) private var context
+    @Query var foguetes: [Foguete]
+
     let colunas: [GridItem] = [
         GridItem(.flexible()),
-        GridItem(.flexible())
+        GridItem(.flexible()),
     ]
-    
+
     var body: some View {
-        NavigationView{
+        NavigationView {
             ScrollView {
-                LazyVGrid(columns: colunas, spacing: 30){
-                    ForEach(ImagemPerfilNomeFoguete.allCases, id: \.self) {foguete in
-                        CardPerfil(foguete: foguete, selecionado: fogueteVM.fogueteSelecionadoPerfil == foguete) {
+                LazyVGrid(columns: colunas, spacing: 30) {
+                    ForEach(ImagemPerfilNomeFoguete.allCases, id: \.self) {
+                        foguete in
+                        CardPerfil(
+                            foguete: foguete,
+                            selecionado: fogueteVM.fogueteSelecionadoPerfil
+                                == foguete
+                        ) {
                             fogueteVM.fogueteSelecionadoPerfil = foguete
+                            fogueteVM.salvarFoguete(
+                                context: context,
+                                foguete: foguete
+                            )
                         }
                     }
                 }
                 .padding()
+                .onAppear {
+
+                    if let salvo = foguetes.first,
+                        let foguete = ImagemPerfilNomeFoguete(
+                            rawValue: salvo.nome
+                        )
+                    {
+                        fogueteVM.fogueteSelecionadoPerfil = foguete
+                    }
+                }
             }
             .background(
                 Image("imageBackground")
@@ -34,9 +55,9 @@ struct Profile: View {
                     .scaledToFill()
                     .ignoresSafeArea()
             )
-            
-            .toolbar{
-                ToolbarItem(placement: .topBarLeading){
+
+            .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
                     Text("Perfil")
                         .foregroundStyle(.white)
                         .fontWeight(.bold)

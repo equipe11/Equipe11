@@ -7,7 +7,6 @@
 
 import SwiftData
 import Foundation
-import Combine
 
 class PomodoroViewModel: ObservableObject {
     @Published var tempoRestante: Int = 0

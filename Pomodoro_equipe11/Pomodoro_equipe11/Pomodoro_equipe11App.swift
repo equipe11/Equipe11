@@ -17,6 +17,6 @@ struct Pomodoro_equipe11App: App {
             ContentView()
                 .environmentObject(fogueteVM)
         }
-        .modelContainer(for: Task.self)
+        .modelContainer(for: [Task.self, Foguete.self])
     }
 }
